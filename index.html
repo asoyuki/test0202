@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Display a map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='map'></div>
+    <!-- <pre id="info"></pre> -->
+
+    <script>
+        // 自分のアクセストークンをセット
+        mapboxgl.accessToken = 'pk.eyJ1IjoidG9zaGlha2ktYW95YW1hIiwiYSI6ImNra2dsb3RmeDBjeW4ydnFmcmNjZnhhdGYifQ.8cFMnktlq7HsBUdUnRvPbA';
+
+        // 上野駅周辺の地図を表示する
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            //style: 'mapbox://styles/toshiaki-aoyama/ckknbdlau460v17o98xcg1qlg', //カスタムスタイルを適用
+            center: [139.77720309, 35.71346722],//[lng, lat]
+            zoom: 14
+        });
+
+        // マーカーをロード
+        var marker1 = new mapboxgl.Marker({ color: '#000000' })
+            .setLngLat([139.77720309, 35.71346722])
+            .addTo(map);
+        var popup1 = new mapboxgl.Popup({ offset: 25 })
+            .setMaxWidth("auto")
+            .setHTML("<h1>緯度：" + marker1.getLngLat().lat + "</br>経度：" + marker1.getLngLat().lng + "</h1>");
+        new mapboxgl.Marker()
+            .setLngLat(marker1.getLngLat())
+            .setPopup(popup1)
+            .addTo(map);
+
+        var marker2 = new mapboxgl.Marker({ color: '#000000' })
+            .setLngLat([139.77920309, 35.71346722])
+            .addTo(map);
+        var popup2 = new mapboxgl.Popup({ offset: 25 })
+            .setMaxWidth("auto")
+            .setHTML("<h1>緯度：" + marker2.getLngLat().lat + "</br>経度：" + marker2.getLngLat().lng + "</h1>");
+        new mapboxgl.Marker()
+            .setLngLat(marker2.getLngLat())
+            .setPopup(popup2)
+            .addTo(map);
+
+
+        //右クリック時のドラッグ動作を無効化=ショートカットメニュー表示有効
+        map.dragRotate.disable();
+
+
+        
+
+        // -------------------- サンプル --------------------
+        //クリック時にマーカー作成
+        // map.on('click', function (e) {
+        //     var markerHeight = 50, markerRadius = 10, linearOffset = 25;
+        //     var popupOffsets = {
+        //         'top': [0, 0],
+        //         'top-left': [0, 0],
+        //         'top-right': [0, 0],
+        //         'bottom': [0, -markerHeight],
+        //         'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+        //         'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+        //         'left': [markerRadius, (markerHeight - markerRadius) * -1],
+        //         'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+        //     };
+        //     var marker = new mapboxgl.Marker(
+        //         { color: '#000000' }
+        //     )
+        //         .setLngLat(e.lngLat)
+        //         .addTo(map);
+        //     var popup = new mapboxgl.Popup({ offset: popupOffsets, className: 'my-class' })
+        //         .setLngLat(e.lngLat)
+        //         .setHTML("<h1>緯度：" + e.lngLat.lat + "</br>経度：" + e.lngLat.lng + "</h1>")
+        //         .setMaxWidth("auto")
+        //         .addTo(map);
+        // });
+
+        //右クリック時のリスナー
+        // map.on('contextmenu', function (e) {
+        //     console.log(e);
+        // });
+
+        //マウス上の座標値を取得
+        // map.on('mousemove', function (e) {
+        //     document.getElementById('info').innerHTML =
+        //         // e.point is the x, y coordinates of the mousemove event relative
+        //         // to the top-left corner of the map
+        //         JSON.stringify(e.point) +
+        //         '<br />' +
+        //         // e.lngLat is the longitude, latitude geographical position of the event
+        //         JSON.stringify(e.lngLat.wrap());
+        // });
+        // -------------------- サンプル --------------------
+    </script>
+
+</body>
+
+</html>
